@@ -10,3 +10,4 @@ shell I/O redirections and Filtering
 8. Save current state of directory -> script that writes into the file ls_cwd_content the result of the command ls -la
 9. Duplicate last line ->script that duplicates the last line of the file iacta
 10. No more javascript ->script that deletes all the regular files
+11. Don't just count your directories, make your directories count -> script that counts the number of directories and sub-directories in the current directory
