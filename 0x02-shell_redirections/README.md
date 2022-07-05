@@ -8,3 +8,4 @@ shell I/O redirections and Filtering
 6. Line #2 -> script that displays the third line of the file iacta.
 7. It is a good file that cuts iron without making a noise ->script that creates a file named exactly \*\\'"Best School"\'\\*$\?\*\*\*\*\*:)
 8. Save current state of directory -> script that writes into the file ls_cwd_content the result of the command ls -la
+9. Duplicate last line ->script that duplicates the last line of the file iacta
