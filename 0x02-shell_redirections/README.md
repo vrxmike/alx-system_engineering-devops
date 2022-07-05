@@ -6,3 +6,4 @@ shell I/O redirections and Filtering
 4. Last lines of a file ->Display the last 10 lines of /etc/passwd
 5. I'd prefer the first ones actually ->Display the first 10 lines of /etc/passwd
 6. Line #2 -> script that displays the third line of the file iacta.
+7. It is a good file that cuts iron without making a noise ->script that creates a file named exactly \*\\'"Best School"\'\\*$\?\*\*\*\*\*:)
