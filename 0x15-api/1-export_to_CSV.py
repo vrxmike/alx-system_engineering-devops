@@ -1,22 +1,19 @@
 #!/usr/bin/python3
 """ Export data in the CSV format.. """
+import csv
 import json
 import requests
 import sys
 
-
 if __name__ == "__main__":
-    response = requests.get("https://jsonplaceholder.typicode.com/users/" +
-                            sys.argv[1])
-    dicti = json.loads(response.text)
-    username = dicti.get('username')
-    response = requests.get("https://jsonplaceholder.typicode.com/todos/" +
-                            "?userId=" + sys.argv[1])
-    todos = json.loads(response.text)
-    tasks = [task for task in todos]
-    with open(sys.argv[1] + ".csv", "w") as f:
-        for task in tasks:
-            data = ['"' + sys.argv[1] + '"', '"' + username + '"', '"' +
-                    str(task.get('completed')) + '"', '"' + task.get('title') +
-                    '"']
-            f.write(",".json(data) + '\n')
+    user_id = sys.argv[1]
+    url = "https://jsonplaceholder.typicode.com/"
+    user = requests.get(url + "users/{}".format(user_id)).json
+    username = user.get("username")
+    todos = requests.get(url + "todos", params={"userid": user_id}).json()
+
+    with open("{}.csv".format(user_id), "w", newline="") as csvfile:
+        writer = csv.writer(csvfile, quoting=csv.QUOTE_ALL)
+        [writer.writerow(
+            [user_id, username, t.get("completed"), t.get("title")]
+        ) for t in todos]
