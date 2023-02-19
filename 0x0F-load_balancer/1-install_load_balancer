@@ -1,41 +1,14 @@
 #!/usr/bin/env bash
 # Installs HAProy version 1.8 with the following configurations:
-#+    Enables management via the init script.
-#+    Distributes requests using a round-robin algorithm.
-
+# Enables management via the init script.
+# Distributes requests using a round-robin algorithm
+# Make sure that HAProxy can be managed via an init script
+# Install and configure HAProxy on my lb-01 server.
 sudo apt-get -y update
-sudo apt-get -y upgrade
-sudo apt-get -y install haproxy
-
-echo "ENABLED=1" >> /etc/default/haproxy
-sudo mv /etc/haproxy/haproxy.cfg{,.original}
-sudo touch /etc/haproxy/haproxy.cfg
-
-printf %s "global
-    log 127.0.0.1 local0 notice
-    maxconn 2000
-    user haproxy
-    group haproxy
-defaults
-    log     global
-    mode    http
-    option  httplog
-    option  dontlognull
-    retries 3
-    option  redispatch
-    timeout  connect  5000
-    timeout  client  10000
-    timeout  server  10000
-listen hbnb
-    bind 100.26.255.154
-    mode http
-    stats enable
-    stats uri /haproxy?stats
-    balance roundrobin
-    option httpclose
-    option forwardfor
-    server 78195-web-100.26.177.156 check
-    server 78195-web-54.210.28.254 check
-" >> /etc/haproxy/haproxy.cfg
-
+sudo apt-get install -y software-properties-common
+sudo add-repository -y ppa:vbernat/haproxy-2.0
+sudo apt-get update
+sudo apt-get update
+sudo apt-get install -y haproxy=2.0.*
+sed -i "$ a frontend load_balancer\n	bind *:80\n	mode http\n	default_backend web_server\nbackend web_servers\n	balance roundrobin\n	server 78195-web-02 54.210.28.254:80 check\n	server 78195-web-01 100.26.177.156:80 check " /etc/haproxy.cfg
 sudo service haproxy start
