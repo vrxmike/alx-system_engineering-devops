@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-# Conects to my ALX-Holberton web-02
-ssh -i ~/.ssh/school ubuntu@54.227.200.104
