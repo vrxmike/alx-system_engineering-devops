@@ -1,16 +1,19 @@
 # Setup New Ubuntu server with nginx
 
-exec { 'update system':
-	command => '/usr/bin/apt-get update
+exec { 'install system':
+	command  => '/usr/bin/apt-get update ; sudo apt-get -y install nginx',
+	provider => shell,
+
 }
 
 package { 'nginx':
-	ensure => 'installed',
+	ensure  => 'installed',
 	require => Exec[ 'update system']
 }
 
-file {'/var/www/html/index.html':
-	content => 'Hello World!'
+exec {'Hello':
+	command  => 'echo "Hello World!" | sudo tee /var/www/html/index.html',
+	provider => shell,
 }
 
 
@@ -19,8 +22,7 @@ exec {'redirect_me':
 	provider => 'shell'
 }
 
-service {'nginx':
-	ensure => running,
-	enable => true,
-	require => package['nginx']
+exec {'run':
+	command  => 'sudo service nginx restart',
+	provider => shell,
 }
